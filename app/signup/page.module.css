@@ -12,7 +12,7 @@
   border-radius: 12px;
   padding: 40px;
   width: 100%;
-  max-width: 380px;
+  max-width: 400px;
   box-shadow: 0 4px 24px rgba(0,0,0,0.06);
 }
 
@@ -42,7 +42,7 @@
 .field {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 5px;
   margin-bottom: 16px;
 }
 
@@ -59,18 +59,28 @@
   font-size: 14px;
   background: #fff;
   color: #18181b;
+  font-family: var(--font-geist-sans);
   transition: border-color 0.15s;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .input:focus {
   outline: none;
-  border-color: #18181b;
+  border-color: #7c3aed;
+  box-shadow: 0 0 0 3px rgba(124,58,237,0.12);
+}
+
+.hint {
+  font-size: 12px;
+  color: #a1a1aa;
+  line-height: 1.4;
 }
 
 .submit {
   width: 100%;
   padding: 10px;
-  background: #18181b;
+  background: #7c3aed;
   color: #fff;
   border: none;
   border-radius: 6px;
@@ -80,6 +90,8 @@
   margin-top: 8px;
   transition: opacity 0.15s;
 }
+
+.submit:hover:not(:disabled) { opacity: 0.88; }
 
 .submit:disabled {
   opacity: 0.5;
@@ -103,46 +115,13 @@
 .footerLink:hover { text-decoration: underline; }
 
 @media (prefers-color-scheme: dark) {
-  .page {
-    background: #09090b;
-  }
-
-  .card {
-    background: #18181b;
-    border-color: #3f3f46;
-    box-shadow: 0 4px 24px rgba(0,0,0,0.4);
-  }
-
-  .title {
-    color: #e4e4e7;
-  }
-
-  .subtitle {
-    color: #71717a;
-  }
-
-  .error {
-    background: #450a0a;
-    color: #fca5a5;
-    border-color: #7f1d1d;
-  }
-
-  .label {
-    color: #a1a1aa;
-  }
-
-  .input {
-    background: #27272a;
-    border-color: #52525b;
-    color: #e4e4e7;
-  }
-
-  .input:focus {
-    border-color: #e4e4e7;
-  }
-
-  .submit {
-    background: #e4e4e7;
-    color: #18181b;
-  }
+  .page    { background: #09090b; }
+  .card    { background: #18181b; border-color: #3f3f46; box-shadow: 0 4px 24px rgba(0,0,0,0.4); }
+  .title   { color: #e4e4e7; }
+  .subtitle, .footer { color: #71717a; }
+  .error   { background: #450a0a; color: #fca5a5; border-color: #7f1d1d; }
+  .label   { color: #a1a1aa; }
+  .hint    { color: #52525b; }
+  .input   { background: #27272a; border-color: #52525b; color: #e4e4e7; }
+  .input:focus { border-color: #7c3aed; }
 }

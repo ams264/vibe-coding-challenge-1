@@ -2,12 +2,13 @@
 
 import { useState, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
+import Link from 'next/link';
 import styles from './page.module.css';
 
 function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const from = searchParams.get('from') ?? '/sample';
+  const from = searchParams.get('from') ?? '/bingo';
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -74,6 +75,11 @@ function LoginForm() {
             {loading ? 'Signing in…' : 'Sign in'}
           </button>
         </form>
+
+        <p className={styles.footer}>
+          Don&apos;t have an account?{' '}
+          <Link href="/signup" className={styles.footerLink}>Create one</Link>
+        </p>
       </div>
     </div>
   );

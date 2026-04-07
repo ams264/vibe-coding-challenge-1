@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
 import styles from './page.module.css';
 
 interface Sample {
@@ -22,7 +21,6 @@ interface CurrentUser {
 const COL_COUNT = 7;
 
 export default function SamplePage() {
-  const router = useRouter();
   const [currentUser, setCurrentUser] = useState<CurrentUser | null>(null);
   const [rows, setRows] = useState<Sample[]>([]);
   const [editingId, setEditingId] = useState<number | null>(null);
@@ -31,11 +29,6 @@ export default function SamplePage() {
   const [error, setError] = useState('');
 
   const isAdmin = currentUser?.role === 'admin';
-
-  async function handleLogout() {
-    await fetch('/api/auth/logout', { method: 'POST' });
-    router.push('/login');
-  }
 
   async function fetchRows() {
     setLoading(true);
@@ -102,7 +95,6 @@ export default function SamplePage() {
             )}
           </p>
         </div>
-        <button className={styles.btnSecondary} onClick={handleLogout}>Sign out</button>
       </div>
 
       {error && <div className={styles.error}>{error}</div>}

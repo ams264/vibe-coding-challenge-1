@@ -11,6 +11,7 @@ export interface SessionPayload {
   userId: number;
   username: string;
   role: string;
+  departmentId: number | null;
 }
 
 export async function signSession(payload: SessionPayload): Promise<string> {

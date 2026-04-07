@@ -8,6 +8,7 @@ interface UserRow {
   Username: string;
   PasswordHash: string;
   Role: string;
+  DepartmentID: number | null;
   Active: number;
 }
 
@@ -27,7 +28,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Invalid username or password.' }, { status: 401 });
   }
 
-  const token = await signSession({ userId: user.UserID, username: user.Username, role: user.Role });
+  const token = await signSession({ userId: user.UserID, username: user.Username, role: user.Role, departmentId: user.DepartmentID ?? null });
 
   const res = NextResponse.json({ ok: true });
   res.cookies.set(COOKIE_NAME, token, {
