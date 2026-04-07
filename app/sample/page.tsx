@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import styles from './page.module.css';
 
 interface Sample {
@@ -13,14 +14,28 @@ interface Sample {
   Active: number;
 }
 
+interface CurrentUser {
+  username: string;
+  role: string;
+}
+
 const COL_COUNT = 7;
 
 export default function SamplePage() {
+  const router = useRouter();
+  const [currentUser, setCurrentUser] = useState<CurrentUser | null>(null);
   const [rows, setRows] = useState<Sample[]>([]);
   const [editingId, setEditingId] = useState<number | null>(null);
   const [editText, setEditText] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+
+  const isAdmin = currentUser?.role === 'admin';
+
+  async function handleLogout() {
+    await fetch('/api/auth/logout', { method: 'POST' });
+    router.push('/login');
+  }
 
   async function fetchRows() {
     setLoading(true);
@@ -29,7 +44,12 @@ export default function SamplePage() {
     setLoading(false);
   }
 
-  useEffect(() => { fetchRows(); }, []);
+  useEffect(() => {
+    fetch('/api/auth/me')
+      .then((r) => r.json())
+      .then((data) => setCurrentUser(data.user));
+    fetchRows();
+  }, []);
 
   function startEdit(row: Sample) {
     setEditingId(row.SampleID);
@@ -47,7 +67,7 @@ export default function SamplePage() {
     const res = await fetch(`/api/sample/${id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ SampleText: editText, LastUpdatedBy: 'ui-user' }),
+      body: JSON.stringify({ SampleText: editText, LastUpdatedBy: currentUser?.username ?? 'unknown' }),
     });
     if (!res.ok) { setError('Failed to save.'); return; }
     cancelEdit();
@@ -59,7 +79,7 @@ export default function SamplePage() {
     const res = await fetch(`/api/sample/${id}`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ LastUpdatedBy: 'ui-user' }),
+      body: JSON.stringify({ LastUpdatedBy: currentUser?.username ?? 'unknown' }),
     });
     if (!res.ok) { setError('Failed to deactivate.'); return; }
     fetchRows();
@@ -67,8 +87,23 @@ export default function SamplePage() {
 
   return (
     <div className={styles.container}>
-      <h1 className={styles.title}>Sample Records</h1>
-      <p className={styles.subtitle}>Showing active records only.</p>
+      <div className={styles.header}>
+        <div>
+          <h1 className={styles.title}>Sample Records</h1>
+          <p className={styles.subtitle}>
+            Showing active records only.
+            {currentUser && (
+              <span className={styles.userBadge}>
+                {currentUser.username}
+                <span className={isAdmin ? styles.roleAdmin : styles.roleUser}>
+                  {currentUser.role}
+                </span>
+              </span>
+            )}
+          </p>
+        </div>
+        <button className={styles.btnSecondary} onClick={handleLogout}>Sign out</button>
+      </div>
 
       {error && <div className={styles.error}>{error}</div>}
 
@@ -86,7 +121,7 @@ export default function SamplePage() {
               <th>Created Date</th>
               <th>Last Updated By</th>
               <th>Last Updated Date</th>
-              <th>Actions</th>
+              {isAdmin && <th>Actions</th>}
             </tr>
           </thead>
           <tbody>
@@ -99,19 +134,21 @@ export default function SamplePage() {
                   <td>{formatDate(row.CreatedDate)}</td>
                   <td>{row.LastUpdatedBy}</td>
                   <td>{formatDate(row.LastUpdatedDate)}</td>
-                  <td className={styles.actions}>
-                    {editingId === row.SampleID ? (
-                      <button className={styles.btnSecondary} onClick={cancelEdit}>Cancel</button>
-                    ) : (
-                      <>
-                        <button className={styles.btnPrimary} onClick={() => startEdit(row)}>Edit</button>
-                        <button className={styles.btnDanger} onClick={() => softDelete(row.SampleID)}>Deactivate</button>
-                      </>
-                    )}
-                  </td>
+                  {isAdmin && (
+                    <td className={styles.actions}>
+                      {editingId === row.SampleID ? (
+                        <button className={styles.btnSecondary} onClick={cancelEdit}>Cancel</button>
+                      ) : (
+                        <>
+                          <button className={styles.btnPrimary} onClick={() => startEdit(row)}>Edit</button>
+                          <button className={styles.btnDanger} onClick={() => softDelete(row.SampleID)}>Deactivate</button>
+                        </>
+                      )}
+                    </td>
+                  )}
                 </tr>
 
-                {editingId === row.SampleID && (
+                {isAdmin && editingId === row.SampleID && (
                   <tr key={`edit-${row.SampleID}`} className={styles.editRow}>
                     <td colSpan={COL_COUNT}>
                       <div className={styles.editPanel}>

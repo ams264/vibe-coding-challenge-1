@@ -6,6 +6,17 @@
   color: #18181b;
 }
 
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 32px;
+}
+
+.header .subtitle {
+  margin-bottom: 0;
+}
+
 .title {
   font-size: 24px;
   font-weight: 700;
@@ -14,8 +25,8 @@
 
 .subtitle {
   color: #666;
-  margin-bottom: 32px;
   font-size: 14px;
+  margin-bottom: 0;
 }
 
 .error {
@@ -29,6 +40,37 @@
 
 .muted {
   color: #888;
+}
+
+.userBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: 12px;
+  font-size: 13px;
+  color: #52525b;
+}
+
+.roleAdmin {
+  background: #fef9c3;
+  color: #854d0e;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 1px 7px;
+  border-radius: 99px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.roleUser {
+  background: #f0fdf4;
+  color: #166534;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 1px 7px;
+  border-radius: 99px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
 }
 
 .table {
@@ -171,6 +213,20 @@
   .table td {
     border-bottom-color: #3f3f46;
     color: #e4e4e7;
+  }
+
+  .userBadge {
+    color: #a1a1aa;
+  }
+
+  .roleAdmin {
+    background: #422006;
+    color: #fde68a;
+  }
+
+  .roleUser {
+    background: #052e16;
+    color: #86efac;
   }
 
   .rowEditing td {

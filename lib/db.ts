@@ -1,4 +1,5 @@
 import Database from 'better-sqlite3';
+import { hashSync } from 'bcryptjs';
 import path from 'path';
 
 const DB_PATH = path.join(process.cwd(), 'data', 'app.db');
@@ -32,5 +33,21 @@ function initSchema(db: Database.Database) {
       LastUpdatedDate TEXT    NOT NULL DEFAULT (datetime('now')),
       Active          INTEGER NOT NULL DEFAULT 1 CHECK (Active IN (0, 1))
     );
+
+    CREATE TABLE IF NOT EXISTS users (
+      UserID        INTEGER PRIMARY KEY AUTOINCREMENT,
+      Username      TEXT    NOT NULL UNIQUE,
+      PasswordHash  TEXT    NOT NULL,
+      Role          TEXT    NOT NULL DEFAULT 'user',
+      CreatedDate   TEXT    NOT NULL DEFAULT (datetime('now')),
+      Active        INTEGER NOT NULL DEFAULT 1
+    );
   `);
+
+  // Seed default users if they don't exist yet
+  const seedUser = db.prepare(
+    `INSERT OR IGNORE INTO users (Username, PasswordHash, Role) VALUES (?, ?, ?)`
+  );
+  seedUser.run('TestUser1',  hashSync('password1!', 10), 'user');
+  seedUser.run('TestAdmin1', hashSync('password1!', 10), 'admin');
 }
