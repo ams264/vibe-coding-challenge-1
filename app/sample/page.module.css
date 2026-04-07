@@ -1,0 +1,209 @@
+.container {
+  font-family: var(--font-geist-sans);
+  max-width: 900px;
+  margin: 48px auto;
+  padding: 0 24px;
+  color: #18181b;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.subtitle {
+  color: #666;
+  margin-bottom: 32px;
+  font-size: 14px;
+}
+
+.error {
+  background: #fee2e2;
+  color: #991b1b;
+  padding: 10px 16px;
+  border-radius: 6px;
+  margin-bottom: 16px;
+  font-size: 14px;
+}
+
+.muted {
+  color: #888;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.table thead tr {
+  background: #f4f4f5;
+  text-align: left;
+}
+
+.table th {
+  padding: 10px 14px;
+  font-weight: 600;
+  font-size: 13px;
+  color: #3f3f46;
+}
+
+.table td {
+  padding: 10px 14px;
+  vertical-align: middle;
+  border-bottom: 1px solid #e4e4e7;
+}
+
+.table .textCell {
+  max-width: 260px;
+}
+
+.table .actions {
+  white-space: nowrap;
+}
+
+.rowEditing td {
+  background: #f0f9ff;
+  border-bottom: none;
+}
+
+.editRow td {
+  padding: 0;
+  border-bottom: 1px solid #e4e4e7;
+}
+
+.editPanel {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 16px;
+  background: #f0f9ff;
+  border-top: 1px dashed #bae6fd;
+}
+
+.editLabel {
+  font-size: 13px;
+  font-weight: 600;
+  color: #0369a1;
+}
+
+.textarea {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #a1a1aa;
+  border-radius: 6px;
+  font-size: 14px;
+  font-family: var(--font-geist-sans);
+  background: #fff;
+  color: #18181b;
+  resize: vertical;
+  box-sizing: border-box;
+}
+
+.editActions {
+  display: flex;
+  gap: 8px;
+}
+
+.btnPrimary {
+  padding: 5px 12px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  margin-right: 6px;
+  background: #18181b;
+  color: #fff;
+}
+
+.btnSecondary {
+  padding: 5px 12px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  margin-right: 6px;
+  background: #e4e4e7;
+  color: #18181b;
+}
+
+.btnDanger {
+  padding: 5px 12px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  margin-right: 6px;
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+@media (prefers-color-scheme: dark) {
+  .container {
+    color: #e4e4e7;
+  }
+
+  .subtitle {
+    color: #a1a1aa;
+  }
+
+  .error {
+    background: #450a0a;
+    color: #fca5a5;
+  }
+
+  .muted {
+    color: #71717a;
+  }
+
+  .table thead tr {
+    background: #27272a;
+  }
+
+  .table th {
+    color: #a1a1aa;
+  }
+
+  .table td {
+    border-bottom-color: #3f3f46;
+    color: #e4e4e7;
+  }
+
+  .rowEditing td {
+    background: #0c2a3a;
+  }
+
+  .editPanel {
+    background: #0c2a3a;
+    border-top-color: #164e63;
+  }
+
+  .editLabel {
+    color: #7dd3fc;
+  }
+
+  .textarea {
+    background: #18181b;
+    color: #e4e4e7;
+    border-color: #52525b;
+  }
+
+  .btnPrimary {
+    background: #e4e4e7;
+    color: #18181b;
+  }
+
+  .btnSecondary {
+    background: #3f3f46;
+    color: #e4e4e7;
+  }
+
+  .btnDanger {
+    background: #450a0a;
+    color: #fca5a5;
+  }
+}
